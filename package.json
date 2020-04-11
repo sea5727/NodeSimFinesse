@@ -1,0 +1,33 @@
+{
+  "name": "nodesimfinesse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "helloworld.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "body-parser-xml": "^2.0.0",
+    "commander": "^5.0.0",
+    "dateformat": "^3.0.3",
+    "deepmerge": "^4.2.2",
+    "express": "^4.17.1",
+    "fast-xml-parser": "^3.16.0",
+    "he": "^1.2.0",
+    "node-xmpp-server": "^2.2.7",
+    "xmlbuilder": "^15.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "mocha test/app.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sea5727/NodeSimFinesse.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sea5727/NodeSimFinesse/issues"
+  },
+  "homepage": "https://github.com/sea5727/NodeSimFinesse#readme"
+}
