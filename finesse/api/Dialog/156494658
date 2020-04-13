@@ -1,0 +1,135 @@
+{
+    "Dialog": {
+        "id": "156494658",
+        "state": "DROPPED",
+        "mediaProperties": {
+            "DNIS": "3004",
+            "callType": "PREROUTE_ACD_IN",
+            "callvariables": {
+                "CallVariable": [
+                    {
+                        "name": "callVariable1",
+                        "value": "821343114______________________"
+                    },
+                    {
+                        "name": "callVariable2",
+                        "value": "152811000160063"
+                    },
+                    {
+                        "name": "callVariable3",
+                        "value": "DJCVP02____________232010_________0000"
+                    },
+                    {
+                        "name": "callVariable4",
+                        "value": "01073647757_____01073647757_____"
+                    },
+                    {
+                        "name": "callVariable5",
+                        "value": "112302_____Default__010010"
+                    },
+                    {
+                        "name": "callVariable6",
+                        "value": "Z05A01001_084123600__________"
+                    },
+                    {
+                        "name": "callVariable7",
+                        "value": "18"
+                    },
+                    {
+                        "name": "callVariable8",
+                        "value": "110012005100"
+                    },
+                    {
+                        "name": "callVariable9",
+                        "value": "020021608"
+                    },
+                    {
+                        "name": "callVariable10",
+                        "value": "43_1_114____________"
+                    },
+                    {
+                        "name": "user.que",
+                        "value": ""
+                    },
+                    {
+                        "name": "user.ewt",
+                        "value": "130712"
+                    },
+                    {
+                        "name": "callVariable5",
+                        "value": "2m0440040__Default__110010"
+                    },
+                    {
+                        "name": "callVariable6",
+                        "value": "Z05Z9900__084123600__________"
+                    },
+                    {
+                        "name": "callVariable7",
+                        "value": "16"
+                    },
+                    {
+                        "name": "callVariable5",
+                        "value": "2m0440040__Default__010010"
+                    },
+                    {
+                        "name": "callVariable6",
+                        "value": "Z05Z99001_084123600__________"
+                    },
+                    {
+                        "name": "callVariable7",
+                        "value": "15"
+                    }
+                ]
+            },
+            "dialogNumber": "821343",
+            "mediaId": "1",
+            "outboundClassification": "",
+            "wrapUpReason": "VOICE_ANNOUNCE"
+        },
+        "associatedDialogUri": "",
+        "fromAddress": "01012345678",
+        "mediaType": "Voice",
+        "participants": [
+            {
+                "Pargicipant": {
+                    "actions": {
+                        "action": [
+                            "TRANSFER_SST",
+                            "CONSULT_CALL",
+                            "HOLD",
+                            "UPDATE_CALL_DATA",
+                            "SEND_DTMF",
+                            "DROP"
+                        ]
+                    },
+                    "mediaAddress": "01073647757",
+                    "mediaAddressType": "",
+                    "startTime": "2019-05-21T04:07:38.017Z",
+                    "state": "ACTIVE",
+                    "stateChangeTime": "2019-05-21T04:07:38.017Z"
+                }
+            },
+            {
+                "Pargicipant": {
+                    "actions": {
+                        "action": [
+                            "TRANSFER_SST",
+                            "CONSULT_CALL",
+                            "HOLD",
+                            "UPDATE_CALL_DATA",
+                            "SEND_DTMF",
+                            "DROP"
+                        ]
+                    },
+                    "mediaAddress": "5008",
+                    "mediaAddressType": "AGENT_DEVICE",
+                    "startTime": "2019-05-21T04:07:38.017Z",
+                    "state": "ACTIVE",
+                    "stateChangeTime": "2019-05-21T04:07:38.017Z"
+                }
+            }
+        ],
+        "toAddress": "821343",
+        "uri": "/finesse/api/Dialog/156494657"
+    }
+}

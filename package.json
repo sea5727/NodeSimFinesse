@@ -12,6 +12,7 @@
     "express": "^4.17.1",
     "fast-xml-parser": "^3.16.0",
     "he": "^1.2.0",
+    "node-rest-client": "^3.1.0",
     "node-xmpp-server": "^2.2.7",
     "xmlbuilder": "^15.1.1"
   },

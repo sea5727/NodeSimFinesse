@@ -25,6 +25,7 @@ router.get('/:id', (req, res) => {
 
 //curl -X PUT 192.168.0.207:3000/finesse/api/User/840000009 -d "<User><extension>3000</extension><state>NOT_READY</state></User>" -H "Content-Type: Application/xml" -v
 //curl -X PUT 192.168.0.207:3000/finesse/api/User/840000009 -d "<User><extension>3003</extension><state>LOGIN</state></User>" -H "Content-Type: Application/xml" -v
+//curl -X PUT 192.168.0.192:8083/finesse/api/User/770440040 -d "<User><extension>3004</extension><state>RESERVED</state></User>" -H "Content-Type: Application/xml" -v
 router.put('/:id', (req, res) => {
     console.log(`[HTTP] ${req.method} ${req.originalUrl} : ${JSON.stringify(req.body)}`)
 
@@ -37,14 +38,11 @@ router.put('/:id', (req, res) => {
         try{
             userData = JSON.parse(data)
             if(req.body.User.state == 'LOGIN'){ // if login request
-                if(userData.User.state == 'LOGOUT'){
-                    req.body.User.state = 'NOT_READY'
-                }
-                else {
-                    return res.status(400).send('already logined user')//todo 실패 d응답
-                }
+                req.body.User.state = 'NOT_READY'
+                // return res.status(400).send('already logined user')//todo 실패 d응답
             }
             userData = deepmerge(userData, req.body)
+            FinesseMemory.set_state(userId, userData.User.state)
         }
         catch(err){
             return res.status(400).send('invalid data')//todo 실패 d응답
@@ -64,7 +62,6 @@ router.put('/:id', (req, res) => {
             return
         })
     })
-
 })
 
 

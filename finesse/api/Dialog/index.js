@@ -7,6 +7,11 @@ const express = require('express')
 const FinesseMemory = require('../../../memory');
 const router = express.Router()
 const xmlFormat = require('../../../utils/xmlFormat')
+const deepmerge = require('deepmerge')
+var Client = require('node-rest-client').Client;
+var client = new Client()
+
+
 
 //curl -X GET 192.168.0.30:3000/finesse/api/Dialog/156494657
 router.get('/:id', (req, res) => {
@@ -25,35 +30,64 @@ router.get('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     console.log(`[HTTP] ${req.method} ${req.originalUrl} : ${JSON.stringify(req.body)}`)
-
+    const dialog_id = req.params.id
     fs.readFile(`.${req.originalUrl}`, (err, data)=> {
         if(err){
             return res.status(404).send('no exists')
         }
 
+
+        let requestedAction = null
         try{
-            objDialog = JSON.parse(data)
-            objDialog = deepmerge(objDialog, req.body)
+            let objDialog = JSON.parse(data)
+
+            requestedAction = req.body.Dialog['requestedAction']
+            if(requestedAction == 'UPDATE_CALL_DATA'){
+                if(objDialog.Dialog.state == 'DROPPED'){
+                    throw 'invalid request'
+                }
+                delete req.body.Dialog['requestedAction'];
+                req.body.Dialog['state'] = 'ACTIVE'
+    
+            }
+            else if(requestedAction == 'DROP'){
+                req.body = {
+                    Dialog : {
+                        state : 'DROPPED'
+                    }
+                }
+            }
+            
+            newobjDialog = deepmerge(objDialog, req.body)
         }
         catch(err){
-            return res.status(400).send('invalid request')
+            return res.status(404).send('invalid request')
         }
         
-        fs.writeFile(`.${req.originalUrl}`, JSON.stringify(objDialog, null, 4), (err) => {
+        fs.writeFile(`.${req.originalUrl}`, JSON.stringify(newobjDialog, null, 4), (err) => {
             if(err){
                 return res.status(500).send('update fail')
             }
-            let xmlDialog = parser_j2x.parse(objDialog)
-            console.log(`[XML] url: ${req.originalUrl} xml : ${xmlDialog}`)
             res.status(202).contentType('Application/xml').send()
 
-            const xmppSession = FinesseMemory.get_xmpp(userId)
-            if(xmppSession != null) { 
-                const xmppUserEvent = xmlFormat.GetXmppUserEventFormat(userId, userData)
-                xmppSession.send(xmppUserEvent)
+            user_id = FinesseMemory.get_user_id_from_dialog(dialog_id)
+
+            const xmppMessage = xmlFormat.GetXmppDialogEventFormat(user_id, newobjDialog)
+            FinesseMemory.get_xmpp(user_id).send(xmppMessage)
+
+            if(requestedAction == 'DROP'){
+                const args = {
+                    headers : {'Content-Type' : 'Application/xml'}, 
+                    data : '<User><state>WORK_READY</state></User>'
+                    
+                }
+                client.put(`http://127.0.0.1:8083/finesse/api/User/${user_id}`, args, (data, response) => {
+                    // console.log(data)
+                    // console.log(response)
+                })                
             }
 
-            
+
         })
 
 
@@ -116,26 +150,30 @@ router.put('/:id', (req, res) => {
     
 })
 
-//curl -X PUT 192.168.0.207:3000/finesse/api/Dialog/156494657 -d "<Dialog><extension>3000</extension><state>NOT_READY</state></User>" -H "Content-Type: Application/xml" -v
+//curl -X POST 192.168.0.192:8083/finesse/api/Dialog/156494658 -d "<Dialog><mediaProperties><DNIS>3004</DNIS></mediaProperties></Dialog>" -H "Content-Type: Application/xml" -v
 router.post('/:id', (req, res) => {
     console.log(`[HTTP] ${req.method} ${req.originalUrl} : ${JSON.stringify(req.body)}`)
     const dialog_id = req.params.id
     fs.readFile(`.${req.originalUrl}`, (err, data)=> {
-        if(!err){
-            return res.status(400).send('already dialog exist')
-        }
+        // if(!err){
+        //     return res.status(400).send('already dialog exist')
+        // }
         Dialog = {Dialog : { id : `${dialog_id}`, state: 'ALERTING'} }
+        Dialog = deepmerge(Dialog, req.body)
         newObjDialog = xmlFormat.MakeDialog(Dialog)
         fs.writeFile(`.${req.originalUrl}`, JSON.stringify(newObjDialog, null, 4),  (err) => {
             if(err) {
                 return res.status(500).send('dialog update fail')
             }
-            return res.status(202).send('post dialog success')
-            
+            res.status(202).send('post dialog success')
+            let { user_id, dn } = FinesseMemory.search_reserved_client()
+            if(user_id != null){
+                FinesseMemory.set_dialog_for_user_id(dialog_id, user_id, dn)
+                xmppMessgae = xmlFormat.GetXmppDialogEventFormat(user_id, newObjDialog)
+                FinesseMemory.get_xmpp(user_id).send(xmppMessgae)
+            }
         })
-        
     })
-
 })
 
 module.exports = router;
