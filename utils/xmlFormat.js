@@ -48,16 +48,17 @@ const GetXmppUserEventFormat = (UserId, objUserData) => {
 const GetXmppDialogEventFormat = (UserId, objDialogData) => {
     const copy = JSON.parse(JSON.stringify(objDialogData));
     const update = {
-        Update : {
-            data: {
-                dialogs : {
-                    '#text': copy
-                }
-            },
-            event: { '#text': 'PUT' },
-            requestId: { '#text': '' },
-            source: { '#text': `/finesse/api/User/${UserId}/Dialogs` }
-        }
+        '#text' : copy
+        // Update : {
+        //     data: {
+        //         dialogs : {
+        //             '#text': copy
+        //         }
+        //     },
+        //     event: { '#text': 'PUT' },
+        //     requestId: { '#text': '' },
+        //     source: { '#text': `/finesse/api/User/${UserId}/Dialogs` }
+        // }
     }
     const update_xml = builder.create(update, {headless: true}).end({ pretty: true });
     const finesse_number = 'simfin01'
@@ -130,60 +131,73 @@ const MakeDialog = (Option) => {
     Dialog['uri'] = Dialog['uri'] || default_uri
     
     
-    CallVariable = mediaProperties['callvariables'].CallVariable
-    CallVariable.push({name : 'callVariable1', value:'821343114______________________'})
-    CallVariable.push({name : 'callVariable2', value:'152811000160063'}) 
-    CallVariable.push({name : 'callVariable3', value:'DJCVP02____________232010_________0000'})
-    CallVariable.push({name : 'callVariable4', value:'01073647757_____01073647757_____'})
-    CallVariable.push({name : 'callVariable5', value:'112302_____Default__010010'})
-    CallVariable.push({name : 'callVariable6', value:'Z05A01001_084123600__________'})
-    CallVariable.push({name : 'callVariable7', value:'18'})
-    CallVariable.push({name : 'callVariable8', value:'110012005100'})
-    CallVariable.push({name : 'callVariable9', value:'020021608'})
-    CallVariable.push({name : 'callVariable10', value:'43_1_114____________'})
-    CallVariable.push({name : 'user.que', value:''})
-    CallVariable.push({name : 'user.ewt', value:'130712'})
+    let CallVariable = mediaProperties['callvariables'].CallVariable
+    let names = []
+    
+    for(let i = 0 ; i < CallVariable.length ; i ++){
+        names.push(CallVariable[i].name)
+    }
+
+    if ( ! names.includes('callVariable1') ) CallVariable.push({name : 'callVariable1', value:'821343114______________________'})
+    if ( ! names.includes('callVariable2') ) CallVariable.push({name : 'callVariable2', value:'152811000160063'}) 
+    if ( ! names.includes('callVariable3') ) CallVariable.push({name : 'callVariable3', value:'DJCVP02____________232010_________0000'})
+    if ( ! names.includes('callVariable4') ) CallVariable.push({name : 'callVariable4', value:'01073647757_____01073647757_____'})
+    if ( ! names.includes('callVariable5') ) CallVariable.push({name : 'callVariable5', value:'012302_____Default__010010'}) //transfer_count : [1]
+    if ( ! names.includes('callVariable6') ) CallVariable.push({name : 'callVariable6', value:'Z05A01001_084123600__________'})
+    if ( ! names.includes('callVariable7') ) CallVariable.push({name : 'callVariable7', value:'18'})//호타입
+    if ( ! names.includes('callVariable7') ) CallVariable.push({name : 'callVariable8', value:'110012005100'})
+    if ( ! names.includes('callVariable8') ) CallVariable.push({name : 'callVariable9', value:'020021608'})
+    if ( ! names.includes('callVariable10') ) CallVariable.push({name : 'callVariable10', value:'43_1_114____________'})
+    if ( ! names.includes('user.que') ) CallVariable.push({name : 'user.que', value:''})
+    if ( ! names.includes('user.ewt') ) CallVariable.push({name : 'user.ewt', value:'130712'})
   
   
-    participants = Dialog['participants']
-    participants.push({
-      Pargicipant : {
-        actions : {
-          action : [
-            "TRANSFER_SST",
-            "CONSULT_CALL",
-            "HOLD",
-            "UPDATE_CALL_DATA",
-            "SEND_DTMF",
-            "DROP"
-          ]
-        },
-        mediaAddress : '01073647757',
-        mediaAddressType : '',
-        startTime : '2019-05-21T04:07:38.017Z',
-        state : 'ACTIVE',
-        stateChangeTime : "2019-05-21T04:07:38.017Z"
-      }
-    })
-    participants.push({
-      Pargicipant : {
-        actions : {
-          action : [
-            "TRANSFER_SST",
-            "CONSULT_CALL",
-            "HOLD",
-            "UPDATE_CALL_DATA",
-            "SEND_DTMF",
-            "DROP"
-          ]
-        },
-        mediaAddress : '5008',
-        mediaAddressType : 'AGENT_DEVICE',
-        startTime : '2019-05-21T04:07:38.017Z',
-        state : 'ACTIVE',
-        stateChangeTime : "2019-05-21T04:07:38.017Z"
-      }
-    })
+    let participants = Dialog['Participant']
+    let party = []
+    if(Dialog['Participant'] != null){
+    }
+    else {
+        participants.push({
+            Pargicipant : {
+              actions : {
+                action : [
+                  "TRANSFER_SST",
+                  "CONSULT_CALL",
+                  "HOLD",
+                  "UPDATE_CALL_DATA",
+                  "SEND_DTMF",
+                  "DROP"
+                ]
+              },
+              mediaAddress : '01073647757',
+              mediaAddressType : '',
+              startTime : '2019-05-21T04:07:38.017Z',
+              state : 'ACTIVE',
+              stateChangeTime : "2019-05-21T04:07:38.017Z"
+            }
+          })
+          participants.push({
+            Pargicipant : {
+              actions : {
+                action : [
+                  "TRANSFER_SST",
+                  "CONSULT_CALL",
+                  "HOLD",
+                  "UPDATE_CALL_DATA",
+                  "SEND_DTMF",
+                  "DROP"
+                ]
+              },
+              mediaAddress : '5008',
+              mediaAddressType : 'AGENT_DEVICE',
+              startTime : '2019-05-21T04:07:38.017Z',
+              state : 'ACTIVE',
+              stateChangeTime : "2019-05-21T04:07:38.017Z"
+            }
+          })
+    }
+
+
     return objDialog
   }
 // const XmppUserEventFormatUsingObject = (UserId, dataObj) => {

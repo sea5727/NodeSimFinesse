@@ -1,0 +1,303 @@
+{
+    "Update": {
+        "data": {
+            "dialogs": {
+                "Dialog": {
+                    "associatedDialogUri": "",
+                    "fromAddress": "01052199414",
+                    "id": "154963621",
+                    "mediaProperties": {
+                        "DNIS": "4141",
+                        "callType": "PREROUTE_ACD_IN",
+                        "dialedNumber": "801048",
+                        "outboundClassification": "",
+                        "callvariables": {
+                            "CallVariable": [
+                                {
+                                    "name": "callVariable1",
+                                    "value": "821802114801048________________"
+                                },
+                                {
+                                    "name": "callVariable2",
+                                    "value": "153206000064406"
+                                },
+                                {
+                                    "name": "callVariable3",
+                                    "value": "SICVP02____________000010_________0000"
+                                },
+                                {
+                                    "name": "callVariable4",
+                                    "value": "01052199414_____01052199414_____"
+                                },
+                                {
+                                    "name": "callVariable5",
+                                    "value": "10840163___T_1_006__010010"
+                                },
+                                {
+                                    "name": "callVariable6",
+                                    "value": "Z05Z99101_0__________________"
+                                },
+                                {
+                                    "name": "?KTIS",
+                                    "value": "06"
+                                },
+                                {
+                                    "name": "callVariable8",
+                                    "value": "110012005100"
+                                },
+                                {
+                                    "name": "callVariable9",
+                                    "value": "031640___"
+                                },
+                                {
+                                    "name": "callVariable10",
+                                    "value": "00_1_114__00_2_EXP__"
+                                },
+                                {
+                                    "name": "user.microapp.ToExtVXML[0]",
+                                    "value": "application=5300;CV1=821802114801048________________;CV2=153206000064406;CV3=SICVP02____________000010_________0000;CV4=01052199414_____01052199414_____;"
+                                },
+                                {
+                                    "name": "user.pag",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.locale",
+                                    "value": "en-us"
+                                },
+                                {
+                                    "name": "user.gid",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.lcd",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.FromExtVXML[0]",
+                                    "value": "CV1=821802114______________________;CV2=153206000064406;CV3=SICVP02____________000010_________0000;CV4=01052199414_____01052199414_____;"
+                                },
+                                {
+                                    "name": "user.microapp.media_server",
+                                    "value": "http://10.110.33.62:7000/CVP"
+                                },
+                                {
+                                    "name": "user.microapp.sys_media_lib",
+                                    "value": ".."
+                                },
+                                {
+                                    "name": "user.end",
+                                    "value": "CVP"
+                                },
+                                {
+                                    "name": "user.tyn",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.wcc",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.gct",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.gyn",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.pyn",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.oyn",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.app",
+                                    "value": "5300"
+                                },
+                                {
+                                    "name": "user.vid",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.que",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.per",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.ewt",
+                                    "value": "123110"
+                                },
+                                {
+                                    "name": "user.microapp.ToExtVXML[2]",
+                                    "value": "to0=CVP;to1=5300;to2=5300;to3=;to4=123110;to5=;to6=;to7=Y;to8=1;to9=N;to10=;to11=A000;to12=Y;to13=;to14=N;to15=N;to16=;to17=;to18=;to19=;to20=0;"
+                                },
+                                {
+                                    "name": "user.num",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.wai",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.eyn",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.FromExtVXML[3]",
+                                    "value": "to21=Y;to22=;to23=N;to24=;to25=50;to26=Y;to27=;to28=N;to29=;to30=;to31=;to32=;to33=1;to34=;to35=;to36=;to37=N;"
+                                },
+                                {
+                                    "name": "user.microapp.ToExtVXML[1]",
+                                    "value": "CV5=10840163___T_1_006__010010;CV6=Z05Z99101_0__________________;CV7=06;CV8=110012005100;CV9=031640___;CV10=00_1_114__00_2_EXP__;"
+                                },
+                                {
+                                    "name": "user.tts",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.sms",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.app_media_lib",
+                                    "value": ".."
+                                },
+                                {
+                                    "name": "user.byn",
+                                    "value": "A000"
+                                },
+                                {
+                                    "name": "user.dyn",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.bsy",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.wat",
+                                    "value": "50"
+                                },
+                                {
+                                    "name": "user.ovf",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.FromExtVXML[1]",
+                                    "value": "CV5=0___________________________________;CV6=______1________________________________;CV7=18;CV8=110012005100;CV9=031640___;CV10=00_1_114____________;"
+                                },
+                                {
+                                    "name": "user.ext",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.vip",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.sid",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.ToExtVXML[3]",
+                                    "value": "to21=Y;to22=;to23=N;to24=;to25=50;to26=Y;to27=;to28=N;to29=;to30=;to31=;to32=;to33=1;to34=;to35=;to36=;to37=Y;"
+                                },
+                                {
+                                    "name": "user.tim",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.FromExtVXML[2]",
+                                    "value": "to0=LOO;to1=5000;to2=5100;to3=;to4=123018;to5=;to6=;to7=Y;to8=1;to9=N;to10=;to11=A000;to12=Y;to13=;to14=N;to15=N;to16=;to17=;to18=;to19=;to20=0;"
+                                },
+                                {
+                                    "name": "user.svc",
+                                    "value": "5300"
+                                },
+                                {
+                                    "name": "user.pcc",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.txt",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.transfer",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.ret",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.microapp.UseVXMLParams",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.ems",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.vyn",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.ser",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "user.ayn",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    },
+                    "mediaType": "Voice",
+                    "participants": {
+                        "Participant": [
+                            {
+                                "actions": {
+                                    "action": [
+                                        "UPDATE_CALL_DATA",
+                                        "DROP"
+                                    ]
+                                },
+                                "mediaAddress": "01052199414",
+                                "mediaAddressType": "",
+                                "startTime": "2020-06-19T03:31:28.324Z",
+                                "state": "INITIATED",
+                                "stateCause": "",
+                                "stateChangeTime": "2020-06-19T03:31:28.325Z"
+                            },
+                            {
+                                "actions": {
+                                    "action": "ANSWER"
+                                },
+                                "mediaAddress": "4141",
+                                "mediaAddressType": "AGENT_DEVICE",
+                                "startTime": "2020-06-19T03:31:28.325Z",
+                                "state": "ALERTING",
+                                "stateCause": "",
+                                "stateChangeTime": "2020-06-19T03:31:28.325Z"
+                            }
+                        ]
+                    },
+                    "state": "ALERTING",
+                    "toAddress": "801048",
+                    "uri": "/finesse/api/Dialog/154963621"
+                }
+            }
+        },
+        "event": "POST",
+        "requestId": "",
+        "source": "/finesse/api/User/900740197/Dialogs"
+    }
+}

@@ -1,10 +1,10 @@
 {
     "Dialog": {
         "id": "156494658",
-        "state": "DROPPED",
+        "state": "ACTIVE",
         "mediaProperties": {
             "DNIS": "3004",
-            "callType": "PREROUTE_ACD_IN",
+            "callType": "TRANSFER",
             "callvariables": {
                 "CallVariable": [
                     {
@@ -25,7 +25,7 @@
                     },
                     {
                         "name": "callVariable5",
-                        "value": "112302_____Default__010010"
+                        "value": "012302_____Default__010010"
                     },
                     {
                         "name": "callVariable6",
@@ -54,30 +54,6 @@
                     {
                         "name": "user.ewt",
                         "value": "130712"
-                    },
-                    {
-                        "name": "callVariable5",
-                        "value": "2m0440040__Default__110010"
-                    },
-                    {
-                        "name": "callVariable6",
-                        "value": "Z05Z9900__084123600__________"
-                    },
-                    {
-                        "name": "callVariable7",
-                        "value": "16"
-                    },
-                    {
-                        "name": "callVariable5",
-                        "value": "2m0440040__Default__010010"
-                    },
-                    {
-                        "name": "callVariable6",
-                        "value": "Z05Z99001_084123600__________"
-                    },
-                    {
-                        "name": "callVariable7",
-                        "value": "15"
                     }
                 ]
             },

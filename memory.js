@@ -1,6 +1,7 @@
 
 let xmpp_client = {}
 let client_value = {
+    User : null,
     state : '',
     xmpp_session : null
 }
@@ -19,8 +20,8 @@ module.exports = {
     },
     search_reserved_client : function(){
         for ( let [key, value] of Object.entries(xmpp_client)){
-            if(value.state == 'RESERVED'){
-                return  { user_id : key, dn : value.extension }
+            if(value.User.state == 'RESERVED'){
+                return  { user_id : key, dn : value.User.extension }
             }
         }
         return  { user_id : null, dn : null }
@@ -37,19 +38,27 @@ module.exports = {
         value.dn = dn
         dialog[dialog_id] = value
     },
-    get_state : function(id){
-        return xmpp_client[id].state
+    get_xmpp_from_dn : function(dn) {
+        for ( let [key, value] of Object.entries(xmpp_client)){
+            if(value.User.extension == dn)
+                return { xmpp_session : xmpp_client[key].xmpp_session, user_id : key }
+        }
+        return { xmpp_session : null, user_id : null }
     },
-    set_state : function(id, state){
-        xmpp_client[id].state = state
+    get_user : function(id) { 
+        return xmpp_client[id].User
     },
-
+    set_user : function(id, User){
+        xmpp_client[id].User = User
+    },
 
     get_xmpp : function(id){
+        if(xmpp_client[id] == null) return null
         return xmpp_client[id].xmpp_session
     },
     set_xmpp : function(id, xmpp){
         value = JSON.parse(JSON.stringify(client_value))
+        value.User = null,
         value.state = '',
         value.xmpp_session = xmpp
         xmpp_client[id] = value

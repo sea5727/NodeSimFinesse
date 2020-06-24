@@ -1,0 +1,25 @@
+{
+    "User": {
+        "dialogs": "/finesse/api/User/0001109/Dialog",
+        "extension": "7073",
+        "firstName": "7",
+        "lastName": "0",
+        "loginId": "0001109",
+        "loginName": "0001109",
+        "mediaType": "1",
+        "pendingState": "",
+        "roles": {
+            "role": "Agent"
+        },
+        "settings": {
+            "wrapUpOnIncoming": "REQUIRED"
+        },
+        "state": "LOGOUT",
+        "stateChangeTime": "2019-12-18T07:31:57Z",
+        "teamId": "1",
+        "teamName": "Default",
+        "uri": "/finesse/api/User/0001109",
+        "reasonCodeId": "1",
+        "logoutAllMedia": "true"
+    }
+}

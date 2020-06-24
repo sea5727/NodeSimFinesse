@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.xml({
     xmlParseOptions : {
+        trim: true, 
         explicitArray : false,
     }
 }));

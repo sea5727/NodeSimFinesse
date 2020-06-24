@@ -14,6 +14,8 @@
     "he": "^1.2.0",
     "node-rest-client": "^3.1.0",
     "node-xmpp-server": "^2.2.7",
+    "prettify-xml": "^1.2.0",
+    "xml-formatter": "^1.2.1",
     "xmlbuilder": "^15.1.1"
   },
   "devDependencies": {},

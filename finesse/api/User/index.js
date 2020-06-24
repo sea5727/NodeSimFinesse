@@ -41,22 +41,22 @@ router.put('/:id', (req, res) => {
                 req.body.User.state = 'NOT_READY'
                 // return res.status(400).send('already logined user')//todo 실패 d응답
             }
-            userData = deepmerge(userData, req.body)
-            FinesseMemory.set_state(userId, userData.User.state)
+            newUserData = deepmerge(userData, req.body)
+            FinesseMemory.set_user(userId, newUserData.User)
         }
         catch(err){
             return res.status(400).send('invalid data')//todo 실패 d응답
         }
 
 
-        fs.writeFile(`.${req.originalUrl}`, JSON.stringify(userData, null, 4), (err) => {
+        fs.writeFile(`.${req.originalUrl}`, JSON.stringify(newUserData, null, 4), (err) => {
             if(err)
                 return res.status(500).send('update fail')
             res.status(202).contentType('Application/xml').send()
 
             const xmppSession = FinesseMemory.get_xmpp(userId)
             if(xmppSession != null) { 
-                const xmppUserEvent = xmlFormat.GetXmppUserEventFormat(userId, userData)
+                const xmppUserEvent = xmlFormat.GetXmppUserEventFormat(userId, newUserData)
                 xmppSession.send(xmppUserEvent)
             }
             return

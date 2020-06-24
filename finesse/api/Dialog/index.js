@@ -31,25 +31,40 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     console.log(`[HTTP] ${req.method} ${req.originalUrl} : ${JSON.stringify(req.body)}`)
     const dialog_id = req.params.id
-    fs.readFile(`.${req.originalUrl}`, (err, data)=> {
+    var path = req.originalUrl
+    fs.readFile(`.${path}`, (err, data)=> {
         if(err){
             return res.status(404).send('no exists')
         }
-
-
+        let objDialog = null
         let requestedAction = null
+        let dialogs = null
+        let Dialog = null
+        let newDialog = null
         try{
-            let objDialog = JSON.parse(data)
-
+            
+            objDialog = JSON.parse(data)
+            if(objDialog.Update.data['dialogs'] != null){
+                dialogs = objDialog.Update.data.dialogs
+                Dialog = objDialog.Update.data.dialogs.Dialog
+            }
+            else {
+                dialogs = objDialog.Update.data
+                Dialog = objDialog.Update.data.dialog
+            }
+                
             requestedAction = req.body.Dialog['requestedAction']
             if(requestedAction == 'UPDATE_CALL_DATA'){
-                if(objDialog.Dialog.state == 'DROPPED'){
+                if(Dialog.state == 'DROPPED'){
                     throw 'invalid request'
                 }
-                delete req.body.Dialog['requestedAction'];
-                req.body.Dialog['state'] = 'ACTIVE'
+                delete req.body.Dialog['requestedAction']
+                req.body.Dialog.state = 'ACTIVE'
     
             }
+            else if(requestedAction == 'TRANSFER_SST'){
+                delete req.body.Dialog['requestedAction']
+            }            
             else if(requestedAction == 'DROP'){
                 req.body = {
                     Dialog : {
@@ -57,121 +72,141 @@ router.put('/:id', (req, res) => {
                     }
                 }
             }
-            
-            newobjDialog = deepmerge(objDialog, req.body)
+            newDialog = deepmerge(Dialog, req.body.Dialog)
+            if(objDialog.Update.data['dialogs'] != null){
+                Dialog = objDialog.Update.data.dialogs.Dialog = newDialog
+            }
+            else {
+                objDialog.Update.data.dialog = newDialog
+            }
+            // objDialog.Update.data.dialogs.Dialog = newDialog
         }
         catch(err){
+            console.log(err)
             return res.status(404).send('invalid request')
         }
         
-        fs.writeFile(`.${req.originalUrl}`, JSON.stringify(newobjDialog, null, 4), (err) => {
+        console.log(path)
+
+        fs.writeFile(`.${path}`, JSON.stringify(objDialog, null, 4), (err) => {
             if(err){
                 return res.status(500).send('update fail')
             }
             res.status(202).contentType('Application/xml').send()
 
-            user_id = FinesseMemory.get_user_id_from_dialog(dialog_id)
+            let Participant = Dialog.participants.Participant
 
-            const xmppMessage = xmlFormat.GetXmppDialogEventFormat(user_id, newobjDialog)
-            FinesseMemory.get_xmpp(user_id).send(xmppMessage)
+            if(!Participant.hasOwnProperty('length')){
+                console.log(Participant.mediaAddress) 
+                var { xmpp_session, user_id } = FinesseMemory.get_xmpp_from_dn(Participant.mediaAddress)
+                if(xmpp_session != null){
+                    xmppMessgae = xmlFormat.GetXmppDialogEventFormat(user_id, objDialog)
+                    xmpp_session.send(xmppMessgae)
 
-            if(requestedAction == 'DROP'){
-                const args = {
-                    headers : {'Content-Type' : 'Application/xml'}, 
-                    data : '<User><state>WORK_READY</state></User>'
-                    
+                    if (requestedAction == 'DROP') {
+                        const args = {
+                            headers: { 'Content-Type': 'Application/xml' },
+                            data: '<User><state>WORK_READY</state></User>'
+        
+                        }
+                        client.put(`http://127.0.0.1:8083/finesse/api/User/${user_id}`, args, (data, response) => {
+                            // console.log(data)
+                            // console.log(response)
+                        })
+                    }
                 }
-                client.put(`http://127.0.0.1:8083/finesse/api/User/${user_id}`, args, (data, response) => {
-                    // console.log(data)
-                    // console.log(response)
-                })                
+            }
+
+            for(let i = 0 ; i < Participant.length; i++){
+                console.log(Participant[i].mediaAddress) 
+                var { xmpp_session, user_id } = FinesseMemory.get_xmpp_from_dn(Participant[i].mediaAddress)
+                if(xmpp_session != null){
+                    xmppMessgae = xmlFormat.GetXmppDialogEventFormat(user_id, objDialog)
+                    xmpp_session.send(xmppMessgae)
+
+                    if (requestedAction == 'DROP') {
+                        const args = {
+                            headers: { 'Content-Type': 'Application/xml' },
+                            data: '<User><state>WORK_READY</state></User>'
+        
+                        }
+                        client.put(`http://127.0.0.1:8083/finesse/api/User/${user_id}`, args, (data, response) => {
+                            // console.log(data)
+                            // console.log(response)
+                        })
+                    }
+                }
             }
 
 
         })
-
-
     })
-
-    // if(req.body.Dialog.requestedAction == 'TEST'){
-    //     let state = req.body.Dialog.state
-    //     let userId = req.body.Dialog.userId
-    //     var { err, data } = await asyncFile.select(`./finesse/api/Dialog/${state}`)
-
-    //     const xmppSession = FinesseMemory.get_xmpp(userId)
-    //     if(xmppSession == null){
-    //         return res.status(500).send({ message: 'no xmpp user' })
-    //     }
-    //     let objData = parser_xj2.parse(data)
-    //     console.log(objData)
-    //     const xmppDialogEvent = xmlFormat.XmppDialogEventFormatUsingString(userId, objData) // send xmpp dialog event
-        
-    //     xmppSession.send(xmppDialogEvent)
-    // }
-    // else if(req.body.Dialog.requestedAction == 'ALERTING'){
-    //     let anyUser = FinesseMemory.get_any_user()
-    //     if(anyUser === undefined){
-    //         return res.status(500).send({ message: 'no ready user' })
-    //     }
-
-    //     const userId = anyUser.Fsm.state.context.User.loginId
-    //     let result = anyUser.Fsm.send('RESERVED')
-    //     if(!result.changed){
-    //         return res.status(500).send({ message: 'no reserved user' })
-    //     }
-
-    //     // update user data
-    //     var { err } = await asyncFile.update(`.${result.context.User.uri}.json`, JSON.stringify(result.context, null, 4))
-    //     if(err){
-    //         return res.status(500).send({ message: 'update reserved user fail' })
-    //     }        const xmppSession = FinesseMemory.get_xmpp(userId)
-    //     if(xmppSession == null){
-    //         return res.status(500).send({ message: 'no xmpp user' })
-    //     }
-
-
-
-    //     const xmppUserEvent = xmlFormat.XmppUserEventFormatUsingObject(result.context.User.loginId, result.context) // send xmpp user event 
-    //     xmppSession.send(xmppUserEvent)
-
-    //     let objDialog = JSON.parse(data)
-    //     objDialog.Dialog.state = 'ALERTING'
-
-    //     var { err } = await asyncFile.update(`.${req.originalUrl}.json`, JSON.stringify(objDialog, null, 4))
-    //     if (err) {
-    //         return res.status(500).send({ message: 'update fail' })
-    //     }
-    
-    //     const xmppDialogEvent = xmlFormat.XmppDialogEventFormatUsingObject(result.context.User.loginId, objDialog) // send xmpp dialog event
-    //     xmppSession.send(xmppDialogEvent)
-    // }
-
-    // return res.status(202).contentType('Application/xml').send()
-    
 })
 
 //curl -X POST 192.168.0.192:8083/finesse/api/Dialog/156494658 -d "<Dialog><mediaProperties><DNIS>3004</DNIS></mediaProperties></Dialog>" -H "Content-Type: Application/xml" -v
+
+//post 는 xmpp 메시지로 전달용.
 router.post('/:id', (req, res) => {
     console.log(`[HTTP] ${req.method} ${req.originalUrl} : ${JSON.stringify(req.body)}`)
+    agent = null
+    if(req.query.agent){
+        agent = req.query.agent
+    }
     const dialog_id = req.params.id
     fs.readFile(`.${req.originalUrl}`, (err, data)=> {
         // if(!err){
         //     return res.status(400).send('already dialog exist')
         // }
-        Dialog = {Dialog : { id : `${dialog_id}`, state: 'ALERTING'} }
-        Dialog = deepmerge(Dialog, req.body)
-        newObjDialog = xmlFormat.MakeDialog(Dialog)
-        fs.writeFile(`.${req.originalUrl}`, JSON.stringify(newObjDialog, null, 4),  (err) => {
+        const objDialog = req.body
+        let dialogs = null
+        let Dialog = null
+        if(objDialog.Update.data['dialogs'] != null){
+            dialogs = objDialog.Update.data.dialogs
+            Dialog = objDialog.Update.data.dialogs.Dialog
+        }
+        else {
+            dialogs = objDialog.Update.data
+            Dialog = objDialog.Update.data.dialog
+        }
+
+
+        fs.writeFile(`.${req.originalUrl}`, JSON.stringify(objDialog, null, 4),  (err) => {
             if(err) {
                 return res.status(500).send('dialog update fail')
             }
             res.status(202).send('post dialog success')
-            let { user_id, dn } = FinesseMemory.search_reserved_client()
-            if(user_id != null){
-                FinesseMemory.set_dialog_for_user_id(dialog_id, user_id, dn)
-                xmppMessgae = xmlFormat.GetXmppDialogEventFormat(user_id, newObjDialog)
-                FinesseMemory.get_xmpp(user_id).send(xmppMessgae)
+            console.log(Dialog)
+            console.log(dialogs)
+
+            if(!agent){
+                Participant = Dialog.participants.Participant
+
+                if(!Participant.hasOwnProperty('length')){
+                    console.log(Participant.mediaAddress)
+                    var { xmpp_session, user_id } = FinesseMemory.get_xmpp_from_dn(Participant.mediaAddress)
+                    if(xmpp_session != null){
+                        const xmppMessage = xmlFormat.GetXmppDialogEventFormat(user_id, objDialog)
+                        xmpp_session.send(xmppMessage)
+                    }                    
+                }
+
+                for(let i = 0 ; i < Participant.length; i++){
+                    console.log(Participant[i].mediaAddress)
+                    var { xmpp_session, user_id } = FinesseMemory.get_xmpp_from_dn(Participant[i].mediaAddress)
+                    if(xmpp_session != null){
+                        const xmppMessage = xmlFormat.GetXmppDialogEventFormat(user_id, objDialog)
+                        xmpp_session.send(xmppMessage)
+                    }
+                }
             }
+            else {
+                xmpp_session = FinesseMemory.get_xmpp(agent)
+                if(xmpp_session != null){
+                    const xmppMessage = xmlFormat.GetXmppDialogEventFormat(agent, objDialog)
+                    xmpp_session.send(xmppMessage)
+                }
+            }
+
         })
     })
 })

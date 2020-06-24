@@ -1,0 +1,28 @@
+<Update>
+  <data>
+    <user>
+      <dialogs>/finesse/api/User/901810001/Dialogs</dialogs>
+      <extension>7073</extension>
+      <firstName>t</firstName>
+      <lastName>8</lastName>
+      <loginId>901810001</loginId>
+      <loginName>901810001</loginName>
+      <mediaType>1</mediaType>
+      <pendingState></pendingState>
+      <roles>
+        <role>Agent</role>
+      </roles>
+      <settings>
+        <wrapUpOnIncoming>REQUIRED</wrapUpOnIncoming>
+      </settings>
+      <state>RESERVED</state>
+      <stateChangeTime>2020-04-27T08:21:58.305Z</stateChangeTime>
+      <teamId>5026</teamId>
+      <teamName>CM_PIM1.T_0_SYS</teamName>
+      <uri>/finesse/api/User/901810001</uri>
+    </user>
+  </data>
+  <event>PUT</event>
+  <requestId></requestId>
+  <source>/finesse/api/User/901810001</source>
+</Update>

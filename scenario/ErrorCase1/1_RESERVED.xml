@@ -1,0 +1,22 @@
+<Update>
+  <data>
+    <user>
+      <dialogs>/finesse/api/User/900740197/Dialogs</dialogs>
+      <extension>7073</extension>
+      <firstName>f</firstName>
+      <lastName>l</lastName>
+      <loginId>900740197</loginId>
+      <mediaType>
+      </mediaType>
+      <pendingState>
+      </pendingState>
+      <state>RESERVED</state>
+      <stateChangeTime>2020-06-19T03:31:28.124Z</stateChangeTime>
+      <uri>/finesse/api/User/900740197</uri>
+    </user>
+  </data>
+  <event>PUT</event>
+  <requestId>
+  </requestId>
+  <source>/finesse/api/User/900740197</source>
+</Update>

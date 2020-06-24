@@ -11,7 +11,22 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/index.js"
-        }
+            "program": "${workspaceFolder}/node-xml-pretty.js",
+            "args": [
+                "${workspaceFolder}/ErrorCase1/RESERVED.xml"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program2",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/index.js",
+            "args": [
+            ]
+        },
+
     ]
 }

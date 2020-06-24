@@ -1,0 +1,14 @@
+<Update>
+  <data>
+    <apiErrors>
+      <apiError>
+        <errorData>7073</errorData>
+        <errorMessage>INVALID_ACTION UPDATE_CALL_DATA on extension 7073</errorMessage>
+        <errorType>Generic Error</errorType>
+      </apiError>
+    </apiErrors>
+  </data>
+  <event>put</event>
+  <requestId>145</requestId>
+  <source>/finesse/api/Dialog/154963621</source>
+</Update>
